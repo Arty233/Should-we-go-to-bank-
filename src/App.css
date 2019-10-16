@@ -1,22 +1,19 @@
-.App {
+body {
+  background-image: url('./img/eQ1Yp7sppcg.jpg');
+  background-size: 100%;
+}
+
+.showWeather {
   text-align: center;
+  margin-top: 150px;
+  background-color: aqua;
+  opacity: 0.7;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35em;
 }
 
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #09d3ac;
+.message {
+  font-size: 1.5em;
+  color: blue;
 }
