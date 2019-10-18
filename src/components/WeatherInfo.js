@@ -10,9 +10,11 @@ class WeatherInfo extends React.Component {
             degreesC: 0,
             message: '',
             isLoaded: false,
+            weather: ''
         }
         this.convertFahrenheitToCelsius = this.convertFahrenheitToCelsius.bind(this);
-        this.setMessage = this.setMessage.bind(this);
+        this.setTempMessage = this.setTempMessage.bind(this);
+        this.setWeatherMessage = this.setWeatherMessage.bind(this);
     }
     componentDidMount() {
         fetch(URL).then(res => res.json()).then(json => {
@@ -20,6 +22,7 @@ class WeatherInfo extends React.Component {
                 degreesF: json.main.temp,
                 degreesC: this.convertFahrenheitToCelsius(json.main.temp).toFixed(1),
                 isLoaded: true,
+                weather: json.weather[0].description,
             })
         })//.then(this.setState({ message: this.setMessage(this.state.degreesC) }))
     }
@@ -28,7 +31,7 @@ class WeatherInfo extends React.Component {
         return (tempF - 32) / 1.8
     }
 
-    setMessage(temp) {
+    setTempMessage(temp) {
         if (temp >= 18) {
             return "Погодка летняя, скорей сюда!"
         }
@@ -43,14 +46,24 @@ class WeatherInfo extends React.Component {
         }
     }
 
+    setWeatherMessage(weather) {
+        switch (weather) {
+            case 'clear sky': return "дождя нет"
+            case 'rain': return 'идет дождь'
+            default: return 'осадки неизвестны'
+        }
+    }
+
 
     render() {
-        this.state.message = this.state.isLoaded ? this.setMessage(this.state.degreesC) : 'загрузка...';
+        const tempMessage = this.state.isLoaded ? this.setTempMessage(this.state.degreesC) : 'загрузка...';
+        const weatherMessage = this.setWeatherMessage(this.state.weather);
         return (
             <div className="showWeather">
                 <h1>Стоит ли нам пойти на банк?</h1>
                 <p>В данный момент на банке {this.state.degreesC} &#8451;</p>
-                <p className="message">{this.state.message}</p>
+                <p>{weatherMessage} </p>
+                <p className="message">{tempMessage} </p>
 
             </div >
         )
